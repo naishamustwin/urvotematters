@@ -347,7 +347,7 @@
         email: fields.email.input.value.trim().toLowerCase(),
         state: fields.state.input.value,
         consent: true,
-        company: $("#f-company").value,
+        hpCheck: $("#f-hpcheck").value,
         elapsedMs: Date.now() - startedAt
       };
 

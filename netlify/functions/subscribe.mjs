@@ -52,8 +52,9 @@ export default async (req) => {
   }
 
   // Spam trap and speed check: pretend success so bots learn nothing.
-  if ((body.company && String(body.company).trim() !== "") ||
+  if ((body.hpCheck && String(body.hpCheck).trim() !== "") ||
       (typeof body.elapsedMs === "number" && body.elapsedMs < MIN_FILL_MS)) {
+    console.warn("Signup dropped as likely spam (trap field filled or form sent too fast).");
     return json(200, { ok: true, status: "added" });
   }
 
