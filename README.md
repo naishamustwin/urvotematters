@@ -52,7 +52,7 @@ In Netlify: **Site configuration > Environment variables**, add:
 |---|---|
 | `APPS_SCRIPT_URL` | The Web app URL from step 1.5 |
 | `SIGNUP_SECRET` | The same secret you saved in Apps Script |
-| `ALLOWED_ORIGIN` | Your site address, e.g. `https://urvotematters.com` (optional, blocks other sites from posting) |
+| `ALLOWED_ORIGIN` | Your site addresses, separated by commas, e.g. `https://urvotematters.com,https://www.urvotematters.com,https://urvotematters.netlify.app` (optional, blocks other sites from posting) |
 
 Then **Deploys > Trigger deploy** so the function picks them up. Submit the form once with your own email and confirm a row appears in the Sheet.
 

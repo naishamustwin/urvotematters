@@ -26,9 +26,15 @@ const json = (status, body) =>
 export default async (req) => {
   if (req.method !== "POST") return json(405, { ok: false, error: "method_not_allowed" });
 
-  const allowed = process.env.ALLOWED_ORIGIN;
+  // ALLOWED_ORIGIN may list several sites, separated by commas, e.g.
+  // https://urvotematters.com,https://www.urvotematters.com,https://urvotematters.netlify.app
+  const allowed = (process.env.ALLOWED_ORIGIN || "")
+    .split(",").map((s) => s.trim().replace(/\/+$/, "")).filter(Boolean);
   const origin = req.headers.get("origin");
-  if (allowed && origin && origin !== allowed) return json(403, { ok: false, error: "forbidden" });
+  if (allowed.length && origin && !allowed.includes(origin)) {
+    console.error("Blocked signup from an origin not in ALLOWED_ORIGIN:", origin);
+    return json(403, { ok: false, error: "forbidden" });
+  }
 
   const { APPS_SCRIPT_URL, SIGNUP_SECRET } = process.env;
   if (!APPS_SCRIPT_URL || !SIGNUP_SECRET) {
